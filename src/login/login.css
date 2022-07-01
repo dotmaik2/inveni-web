@@ -1,0 +1,15 @@
+.login_status_msj {
+    color: #FF0000;
+}
+
+body {
+  background-color: #f9f9fa;
+  background-image: url('background.jpg');
+  background-repeat: no-repeat;
+  background-size: 667px 600px;
+}
+
+.card {
+  background-color: transparent!;
+  margin-top: 180px;
+}

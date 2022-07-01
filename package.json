@@ -1,0 +1,54 @@
+{
+  "name": "inveni-desktop",
+  "productName": "inveni-desktop",
+  "version": "2.1.0",
+  "description": "inveni-desktop",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "electron-forge start",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "keywords": [],
+  "author": {
+    "name": "dotmaik1",
+    "email": "dotmaik1@gmail.com"
+  },
+  "license": "MIT",
+  "build": {
+    "productName": "Inveni Desktop",
+    "appId": "com.inveni.io",
+    "asar": true,
+    "win": {
+      "target": [
+        {
+          "target": "portable",
+          "arch": [
+            "ia32"
+          ]
+        }
+      ]
+    },
+    "portable": {
+      "unicode": false,
+      "artifactName": "inveni_portable_${version}.exe"
+    }
+  },
+  "dependencies": {
+    "@electron/remote": "^2.0.8",
+    "ejs-electron": "^2.1.1",
+    "electron-settings": "^4.0.2",
+    "electron-squirrel-startup": "^1.0.0",
+    "macaddress": "^0.5.2",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "electron-builder": "^22.14.5",
+    "@electron-forge/cli": "^6.0.0-beta.63",
+    "@electron-forge/maker-deb": "^6.0.0-beta.63",
+    "@electron-forge/maker-rpm": "^6.0.0-beta.63",
+    "@electron-forge/maker-squirrel": "^6.0.0-beta.63",
+    "@electron-forge/maker-zip": "^6.0.0-beta.63",
+    "electron": "16.0.7"
+  }
+}

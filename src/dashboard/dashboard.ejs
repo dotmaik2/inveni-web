@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Inveni Desktop app">
+  <meta name="author" content="dotmaik1@gmail.com">
+  <script src="../assets/plugins/jquery/jquery.min.js"></script>
+  <link rel="stylesheet" href="../assets/dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="../assets/plugins/fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="../assets/plugins/daterangepicker/daterangepicker.css">
+  <link rel="stylesheet" href="../assets/dist/css/datatables.css" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/dist/css/custom-style.css" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/plugins/sweetalert2/design.css" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/dist/css/buttons.dataTables.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/dist/css/buttons.bootstrap4.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="./dashboard.css" rel="stylesheet">
+  <!-- favicon -->
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/dist/img/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/dist/img/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/dist/img/favicon/favicon-16x16.png">
+  <link rel="manifest" href="../assets/dist/img/favicon/site.webmanifest">
+  <title>Inveni | Dashboard</title>
+  <style>
+    div.dataTables_wrapper div.dataTables_processing {
+      background-color: #F4F6F9;
+      border: 1px solid #222;
+      -moz-border-radius: 7px;
+      -webkit-border-radius: 7px;
+      -webkit-border-radius: inset 0 0 6px rgba(0, 0, 0, 0.1);
+      border-radius: inset 0 0 6px rgba(0, 0, 0, 0.1);
+      padding: 10px;
+    }
+  </style>
+</head>
+
+<body class="hold-transition layout-top-nav">
+  <div class="wrapper">
+    <!-- Navbar -->
+    <nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
+      <div class="container">
+        <span class="navbar-brand">
+          <img src="../assets/dist/img/logo.png" alt="Inveni Logo" class="brand-image" style="opacity: .8">
+          <span class="brand-text">BIENVENIDO <small> <span id="txt_usuario"></span> </small></span>
+        </span>
+        <button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+          aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse order-3" id="navbarCollapse">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="#" id="btn_logout" role="button">
+                <i class="fas fa-sign-out-alt"></i> Logout
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+                <i class="fas fa-expand-arrows-alt"></i> Pantalla completa
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="reload_page" href="#" role="button">
+                <i class="fas fa-sync-alt"></i> Recargar
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- /.navbar -->
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+
+      <!-- Content Header (Page header) -->
+      <div class="content-header">
+        <div class="container">
+          <div class="row mb-2">
+            <div class="col-sm-12">
+
+
+
+            </div><!-- /.col -->
+          </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+      </div>
+      <!-- /.content-header -->
+
+      <!-- Main content -->
+      <div class="content">
+        <div class="container-fluid">
+          <!-- .row -->
+          <div class="row">
+            <div class="col-lg-12">
+
+              <div class="card card-primary card-outline card-tabs">
+                <div class="card-header p-0 pt-1 border-bottom-0">
+                  <ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
+
+                    <li class="nav-item">
+                      <a class="nav-link active" id="custom-tabs-three-home-tab" data-toggle="pill"
+                        href="#custom-tabs-three-home" role="tab" aria-controls="custom-tabs-three-home"
+                        aria-selected="true">Consultar</a>
+                    </li>
+                    <li class="nav-item" id="mercaTab" style="display: none;">
+                      <a class="nav-link" id="custom-tabs-three-general-tab" data-toggle="pill"
+                        href="#custom-tabs-three-general" role="tab" aria-controls="custom-tabs-three-general"
+                        aria-selected="false">Mercadotecnia</a>
+                    </li>
+
+                  </ul>
+                </div>
+                <div class="card-body">
+                  <div class="tab-content" id="custom-tabs-three-tabContent">
+                    <div class="tab-pane fade active show" id="custom-tabs-three-home" role="tabpanel"
+                      aria-labelledby="custom-tabs-three-home-tab">
+                      <!--
+
+                          Database
+
+                        -->
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <h4 class="card-title">
+                            <nav aria-label="breadcrumb">
+                              <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                  <i class="fas fa-database"></i> <span id="databaseName"> Selecciona una base de datos
+                                  </span>
+                                </li>
+                              </ol>
+                            </nav>
+                          </h4>
+                        </div>
+                        <div class="col-sm-4">
+                          <div class="form-group row">
+                            <div class="col-sm-12">
+                              <select id="combobox_tablas" class="form-control form-control-sm" disabled>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-sm-2">
+                          <div class="form-group">
+                            <button type="button" id="q" class="btn btn-block btn-outline-primary btn-sm" disabled>
+                              Conectar
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="table-responsive p-0" id="database">
+                        <table class="table table-striped table-valign-middle" id="tables_datatable">
+                          <thead id="tables_datatable_titles">
+                          </thead>
+                          <!--<tbody id="tables_datatable_data"> </tbody>-->
+                          <tfoot></tfoot>
+                        </table>
+                      </div>
+                    </div>
+                    <div class="tab-pane fade" id="custom-tabs-three-general" role="tabpanel"
+                      aria-labelledby="custom-tabs-three-general-tab">
+                      <!--
+
+                          General
+
+                        -->
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <h4 class="card-title">
+                            <nav aria-label="breadcrumb">
+                              <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                  <i class="fas fa-database"></i> <span id="databaseName_mercadotecnia"> Selecciona una
+                                    base de datos
+                                  </span>
+                                </li>
+                              </ol>
+                            </nav>
+                          </h4>
+                        </div>
+                        <div class="col-sm-4">
+                          <div class="form-group row">
+                            <div class="col-sm-12">
+                              <select id="combobox_tablas_mercadotecnia" class="form-control form-control-sm" disabled>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-sm-2">
+                          <div class="form-group">
+                            <button type="button" id="q_mercadotecnia" class="btn btn-block btn-outline-primary btn-sm"
+                              disabled>
+                              Conectar
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="table-responsive p-0">
+                        <table class="table table-striped table-valign-middle" id="tables_datatable_mercadotecnia">
+                          <thead id="tables_datatable_mercadotecnia_titles">
+                          </thead>
+                          <!--<tbody id="tables_datatable_data"> </tbody>-->
+                          <tfoot></tfoot>
+                        </table>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <!-- /.row -->
+
+        </div><!-- /.container-fluid -->
+      </div><!-- /.content -->
+
+    </div><!-- /.content-wrapper -->
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+      <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
+
+    <!-- Main Footer -->
+    <footer class="main-footer ">
+      <!-- To the right -->
+      <div class="float-right d-none d-sm-inline">
+        <b>Version</b> 2.1.0
+      </div>
+      <!-- Default to the left -->
+      <strong>Inveni © 2022 </a>.</strong> Todos los derechos reservados.
+    </footer>
+  </div>
+  <!-- ./wrapper -->
+
+  <!-- REQUIRED SCRIPTS -->
+  <script src="../assets/plugins/jquery/jquery.min.js"></script>
+  <script src="../assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/plugins/datatables/jquery.dataTables.min.js"></script>
+  <script src="../assets/plugins/datatables/datatables-responsive/js/dataTables.responsive.min.js"></script>
+  <script src="../assets/plugins/moment/moment.min.js"></script>
+  <script src="../assets/plugins/daterangepicker/daterangepicker.js"></script>
+  <script src="../assets/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+  <script src="../assets/dist/js/adminlte.js"></script>
+  <script src="../assets/dist/js/jquery.bootgrid.min.js"></script>
+  <script src="../assets/dist/js/jquery.bootgrid.fa.min.js"></script>
+  <script src="../assets/plugins/sweetalert2/sweetalert2.min.js"></script>
+  <!-- <script type="text/javascript" src='../assets/dist/js/xlsx.full.min.js'></script> -->
+  <script lang="javascript" src="https://cdn.sheetjs.com/xlsx-0.18.6/package/dist/xlsx.full.min.js"></script>
+  <script src='../assets/dist/js/dataTables.buttons.min.js'></script>
+
+  <script src="./dashboard.js"></script>
+  <script type="text/javascript">
+    (function (APP) {
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3500
+      });
+
+      APP.STORE = APP.STORE || {};
+      APP.STORE.TABLE_LIST = []
+
+      APP.STORE.USUARIO = ''
+      APP.STORE.MACADDRESS = ''
+      APP.STORE.PREVIOUS_QUERY = ''
+      APP.STORE.PREVIOUS_QUERY_ARRAY = []
+      APP.STORE.PREVIOUS_TABLE = []
+      APP.STORE.PREVIOUS_COLUMN = []
+
+      APP.STORE.PREVIOUS_JSON_OBJECT = ''
+      APP.STORE.PREVIOUS_JSON_OBJECTS_ARRAY = []
+
+      APP.LOAD = APP.LOAD || {};
+
+      APP.LOAD.LOAD_TABLE_DETAIL = APP.LOAD.LOAD_TABLE_DETAIL || function (tableName) {
+        $.ajax({
+          cache: false,
+          //url: 'http://localhost:3000/api/remote/getOneFromRemote/' + tableName,
+          url: 'http://157.245.245.81:3000/api/remote/getOneFromRemote/' + tableName,
+          type: 'GET',
+          success: function (data) {
+            if (data.payload === "No se encontraron tablas en la base de datos") {
+              $('#tables_datatable').DataTable({
+                searching: false, paging: false, info: false,
+                "language": {
+                  "lengthMenu": "registros por pagina: _MENU_ ",
+                  "zeroRecords": "No se encontro nada",
+                  "info": "Mostrando de _START_ a _END_ de _TOTAL_",
+                  "infoEmpty": "Sin registros",
+                  "infoFiltered": "(filtered from _MAX_ total records)",
+                  "sSearch": "Buscar",
+                  "paginate": {
+                    "previous": "Atras",
+                    "next": "Siguiente"
+                  }
+                },
+              });
+              return;
+            }
+
+            var titles = data.payload.titles;
+            var columnNames = []
+
+            for (let i = 0; i < titles.length; i++) {
+              const element = titles[i].Field;
+              columnNames.push({ data: String(element), title: String(element) })
+            }
+
+            $.fn.dataTable.ext.errMode = 'none';
+            if ($.fn.DataTable.isDataTable('#tables_datatable')) {
+              $('#tables_datatable').DataTable().clear().destroy();
+              $("#tables_datatable tbody").empty();
+              $("#tables_datatable thead").empty();
+            }
+
+            var datatable = $('#tables_datatable')
+              .on('error.dt', function (e, settings, techNote, message) {
+                Toast.fire({
+                  icon: 'error',
+                  title: settings.jqXHR.responseJSON.message
+                });
+              })
+              .DataTable({
+                columns: columnNames,
+                processing: true,
+                serverSide: true,
+                ajax: {
+                  type: "POST",
+                  // url: "http://localhost:3000/api/remote/getUserAllowedTableServerSideQuery",
+                  url: "http://157.245.245.81:3000/api/remote/getUserAllowedTableServerSideQuery",
+                  data: function (d) {
+                    d.table = tableName;
+                    d.macAddress = STORE.MACADDRESS;
+                    d.usuario = STORE.USUARIO;
+                  }
+                },
+                drawCallback: function (settings) {
+                  // Here the response
+                  var response = settings.json;
+                  // console.log(response); // para ver la respuesta que le llega del ajax
+                },
+                initComplete: function () {
+                  this.api().columns().every(function () {
+                    var column = this;
+
+                    var timeout = null;
+                    // var select = $('<input type="text" oninput="this.size = this.value.length" oninput="LOAD.STOP_PROPAGATION(event)" onclick="LOAD.STOP_PROPAGATION(event);" class="individual_search" placeholder="Buscar" />')
+                    var select = $('<input type="text" oninput="LOAD.STOP_PROPAGATION(event)" onclick="LOAD.STOP_PROPAGATION(event);" class="individual_search" placeholder="Buscar" />')
+                      .appendTo($(column.header()))
+                      .on('keyup', function (evt) {
+                        //if(evt.type === 'keyup' && evt.keyCode !== 10 && evt.keyCode !== 13) return;
+                        //if(evt.type === 'keyup' && evt.keyCode !== 10 && evt.keyCode !== 13) return;
+                        // Clear the timeout if it has already been set.
+                        // This will prevent the previous task from executing
+                        // if it has been less than <MILLISECONDS>
+                        clearTimeout(timeout);
+
+                        // Make a new timeout set to go off in 1000ms (1 second)
+                        timeout = setTimeout(function () {
+                          console.log('stopped tiping');
+                          $("#tables_datatable > tbody").show();
+                          var val = $.fn.dataTable.util.escapeRegex(
+                            $(select).val()
+                          );
+
+                          column
+                            .search(val ? '%' + val + '%' : '%', true, false)
+                            .draw();
+                        }, 1000);
+                      });
+
+                    column.data().unique().sort().each(function (d, j) {
+                      select.append('<option value="' + d + '">' + d + '</option>')
+                    });
+                  });
+                  $("#tables_datatable_filter").hide();
+                },
+                pageLength: 5,
+                lengthMenu: [[5, 10, 20], [5, 10, 20]],
+                pagingType: "full_numbers",
+                language: {
+                  "sProcessing": "Procesando...",
+                  "sLengthMenu": "Mostrar _MENU_ registros",
+                  "sZeroRecords": "No se encontraron resultados",
+                  "sEmptyTable": "Ningún dato disponible en esta tabla",
+                  "info": "Mostrando de _START_ a _END_ de _TOTAL_",
+                  "infoEmpty": "Sin registros",
+                  "infoFiltered": "(filtered from _MAX_ total records)",
+                  "sSearch": "Buscar",
+                  "sLoadingRecords": "Cargando...",
+                  "oPaginate": {
+                    "sFirst": "Primero",
+                    "sLast": "Último",
+                    "sNext": "Siguiente",
+                    "sPrevious": "Anterior"
+                  },
+                }
+              });
+
+            $("#tables_datatable > tbody").hide();
+          },
+          error: function (xhr) {
+            Toast.fire({
+              icon: 'error',
+              title: 'No se pudo cargar la información'
+            });
+          },
+        });
+      };
+
+      APP.LOAD.LOAD_TABLE_DETAIL_MERCADOTECNIA = APP.LOAD.LOAD_TABLE_DETAIL_MERCADOTECNIA || function (tableName) {
+        $.ajax({
+          cache: false,
+          //url: 'http://localhost:3000/api/remote/getOneFromRemote/todasGeneral',
+          url: 'http://157.245.245.81:3000/api/remote/getOneFromRemote/' + tableName,
+          type: 'GET',
+          success: function (data) {
+            if (data.payload === "No se encontraron tablas en la base de datos") {
+              $('#tables_datatable_mercadotecnia').DataTable({
+                searching: false, paging: false, info: false,
+                "language": {
+                  "lengthMenu": "registros por pagina: _MENU_ ",
+                  "zeroRecords": "No se encontro nada",
+                  "info": "Mostrando de _START_ a _END_ de _TOTAL_",
+                  "infoEmpty": "Sin registros",
+                  "infoFiltered": "(filtered from _MAX_ total records)",
+                  "sSearch": "Buscar",
+                  "paginate": {
+                    "previous": "Atras",
+                    "next": "Siguiente"
+                  }
+                },
+              });
+              return;
+            }
+
+            var titles = data.payload.titles;
+            var columnNames = []
+
+            for (let i = 0; i < titles.length; i++) {
+              const element = titles[i].Field;
+              columnNames.push({ data: String(element), title: String(element) })
+            }
+
+            $.fn.dataTable.ext.errMode = 'none';
+            if ($.fn.DataTable.isDataTable('#tables_datatable_mercadotecnia')) {
+              $('#tables_datatable_mercadotecnia').DataTable().clear().destroy();
+              $("#tables_datatable_mercadotecnia tbody").empty();
+              $("#tables_datatable_mercadotecnia thead").empty();
+            }
+
+            var datatable = $('#tables_datatable_mercadotecnia')
+              .on('error.dt', function (e, settings, techNote, message) {
+                console.log(e)
+                console.log(settings)
+                console.log(techNote)
+                console.log(message)
+                Toast.fire({
+                  icon: 'error',
+                  title: settings.jqXHR.responseJSON.message
+                });
+              })
+              .DataTable({
+                columns: columnNames,
+                processing: true,
+                serverSide: true,
+                dom: 'Bfrtip',
+                buttons: [
+                  'pageLength',
+                  {
+                    text: 'Exportar a Excel',
+                    action: function (e, dt, node, config) {
+                      let datatableJson = datatable.ajax.json()
+                      console.log(datatableJson)
+                      LOAD.GENERER_EXCEL(datatableJson.data)
+                    }
+                  }
+                ],
+                ajax: {
+                  type: "POST",
+                  //url: "http://localhost:3000/api/remote/getUserAllowedTableServerSideQuery",
+                  url: "http://157.245.245.81:3000/api/remote/getUserAllowedTableServerSideQuery",
+                  data: function (d) {
+                    // d.table = tableName;
+                    d.table = tableName;
+                    d.macAddress = STORE.MACADDRESS;
+                    d.usuario = STORE.USUARIO;
+                  }
+                },
+                drawCallback: function (settings) {
+                  // Here the response
+                  var response = settings.json;
+                  // console.log(response); // para ver la respuesta que le llega del ajax
+                },
+                initComplete: function () {
+                  this.api().columns().every(function () {
+                    var column = this;
+
+                    var timeout = null;
+                    // var select = $('<input type="text" oninput="this.size = this.value.length" oninput="LOAD.STOP_PROPAGATION(event)" onclick="LOAD.STOP_PROPAGATION(event);" class="individual_search" placeholder="Buscar" />')
+                    var select = $('<input type="text" oninput="LOAD.STOP_PROPAGATION(event)" onclick="LOAD.STOP_PROPAGATION(event);" class="individual_search" placeholder="Buscar" />')
+                      .appendTo($(column.header()))
+                      .on('keyup', function (evt) {
+                        //if(evt.type === 'keyup' && evt.keyCode !== 10 && evt.keyCode !== 13) return;
+                        // Clear the timeout if it has already been set.
+                        // This will prevent the previous task from executing
+                        // if it has been less than <MILLISECONDS>
+                        clearTimeout(timeout);
+
+                        // Make a new timeout set to go off in 1000ms (1 second)
+                        timeout = setTimeout(function () {
+                          console.log('stopped tiping');
+                          $("#tables_datatable_mercadotecnia > tbody").show();
+                          var val = $.fn.dataTable.util.escapeRegex(
+                            $(select).val()
+                          );
+
+                          column
+                            .search(val ? '%' + val + '%' : '%', true, false)
+                            .draw();
+                        }, 1000);
+                      });
+
+                    column.data().unique().sort().each(function (d, j) {
+                      select.append('<option value="' + d + '">' + d + '</option>')
+                    });
+                  });
+                  $("#tables_datatable_mercadotecnia_filter").hide();
+                },
+                pageLength: 5,
+                lengthMenu: [[5, 10, 20], [5, 10, 20]],
+                pagingType: "full_numbers",
+                language: {
+                  "sProcessing": "Procesando...",
+                  "sLengthMenu": "Mostrar _MENU_ registros",
+                  "sZeroRecords": "No se encontraron resultados",
+                  "sEmptyTable": "Ningún dato disponible en esta tabla",
+                  "info": "Mostrando de _START_ a _END_ de _TOTAL_",
+                  "infoEmpty": "Sin registros",
+                  "infoFiltered": "(filtered from _MAX_ total records)",
+                  "sSearch": "Buscar",
+                  "sLoadingRecords": "Cargando...",
+                  "oPaginate": {
+                    "sFirst": "Primero",
+                    "sLast": "Último",
+                    "sNext": "Siguiente",
+                    "sPrevious": "Anterior"
+                  },
+                }
+              });
+
+            $("#tables_datatable_mercadotecnia > tbody").hide();
+          },
+          error: function (xhr) {
+            Toast.fire({
+              icon: 'error',
+              title: 'No se pudo cargar la información'
+            });
+          },
+        });
+      };
+
+      // Es necesario para las busquedas.
+      APP.LOAD.STOP_PROPAGATION = APP.LOAD.STOP_PROPAGATION || function (evt) {
+        if (evt.stopPropagation !== undefined) {
+          evt.preventDefault();
+          evt.stopPropagation();
+        } else {
+          evt.cancelBubble = true;
+        }
+      };
+
+      APP.LOAD.GET_USER_ALLOWED_TABLES = APP.LOAD.GET_USER_ALLOWED_TABLES || async function () {
+        //return await fetch('http://localhost:3000/api/remote/getUserAllowedTables', {
+        return await fetch('http://157.245.245.81:3000/api/remote/getUserAllowedTables', {
+          method: 'POST', mode: 'cors', cache: 'no-cache', credentials: 'same-origin',
+          headers: { 'Content-Type': 'application/json' },
+          redirect: 'follow', referrerPolicy: 'no-referrer',
+          body: JSON.stringify({
+            usuario: STORE.USUARIO
+          }) // body data type must match "Content-Type" header
+        })
+      };
+
+      APP.LOAD.TABLES_COMBOBOX = APP.LOAD.TABLES_COMBOBOX || function () {
+        LOAD.GET_USER_ALLOWED_TABLES()
+          .then(res => res.json())
+          .then(async response => {
+            if (response.message === 'Cliente no permitido.') {
+              Toast.fire({
+                icon: 'error',
+                title: 'No esta permitido.'
+              });
+              return;
+            }
+
+            if (response.message === 'Fecha limite excedida.') {
+              Toast.fire({
+                icon: 'error',
+                title: 'Fecha limite excedida.'
+              });
+              return;
+            }
+
+            var tables = response.payload;
+            let mercaTab = document.getElementById("mercaTab");
+
+            if (tables.length > 0) {
+
+              console.log(tables);
+
+              let mercadotecniaTablas = [];
+              mercadotecniaTablas = jQuery.map(tables, function (a) {
+                if (a.name.includes("_MERCADOTECNIA")) {
+                  return a;
+                }
+              });
+
+              console.log("mercadotecnia")
+              console.log(mercadotecniaTablas)
+
+              let consultaTablas = [];
+              consultaTablas = jQuery.map(tables, function (a) {
+                if (a.name.includes("_CONSULTA")) {
+                  return a;
+                }
+              });
+
+              console.log("consulta")
+              console.log(consultaTablas)
+
+              let normalTablas = [];
+              normalTablas = jQuery.map(tables, function (a) {
+                if (a.name.includes("_CONSULTA") || a.name.includes("_MERCADOTECNIA")) {
+
+                } else {
+                  return a;
+                }
+              });
+
+              console.log("normal")
+              console.log(normalTablas)
+
+              if (mercadotecniaTablas.length > 0) {
+                mercaTab.style.display = "block";
+                $("#combobox_tablas_mercadotecnia").empty();
+                $("#q_mercadotecnia").prop("disabled", false);
+                $("#combobox_tablas_mercadotecnia").prop("disabled", false);
+                for (var i = 0; i < mercadotecniaTablas.length; i++) {
+                  $("#combobox_tablas_mercadotecnia")
+                    .append(`<option value="${mercadotecniaTablas[i]['name']}">${mercadotecniaTablas[i]['name'].replace('_MERCADOTECNIA', '')}</option>`);
+                }
+              } else {
+                mercaTab.style.display = "none";
+                $("#combobox_tablas_mercadotecnia").empty();
+                $("#combobox_tablas_mercadotecnia").prop("disabled", true);
+                $("#q_mercadotecnia").prop("disabled", true);
+              }
+
+              if (consultaTablas.length > 0 || normalTablas.length > 0) {
+                $("#combobox_tablas").empty();
+                $("#q").prop("disabled", false);
+                $("#combobox_tablas").prop("disabled", false);
+                for (var i = 0; i < consultaTablas.length; i++) {
+                  $('#combobox_tablas')
+                    .append(`<option value="${consultaTablas[i]['name']}">${consultaTablas[i]['name'].replace('_CONSULTA', '')}</option>`);
+                }
+                for (var i = 0; i < normalTablas.length; i++) {
+                  $('#combobox_tablas')
+                    .append(`<option value="${normalTablas[i]['name']}">${normalTablas[i]['name']}</option>`);
+                }
+              } else {
+                $("#combobox_tablas").empty();
+                $("#combobox_tablas").prop("disabled", true);
+                $("#q").prop("disabled", true);
+              }
+
+
+            } else {
+              Toast.fire({
+                icon: 'error',
+                title: 'Usuario sin permisos en ninguna base de datos.'
+              });
+
+              $("#combobox_tablas").empty();
+              $("#combobox_tablas_mercadotecnia").empty();
+
+              $("#combobox_tablas").prop("disabled", true);
+              $("#combobox_tablas_mercadotecnia").prop("disabled", true);
+
+              $("#q").prop("disabled", true);
+              $("#q_mercadotecnia").prop("disabled", true);
+            }
+          })
+          .catch(err => {
+            console.log(err)
+            if (err == "TypeError: Failed to fetch") {
+              Toast.fire({
+                icon: 'error',
+                title: 'El servidor no esta disponible'
+              });
+            } else {
+              Toast.fire({
+                icon: 'error',
+                title: err
+              });
+            }
+            $("#combobox_tablas").empty();
+            $("#combobox_tablas_mercadotecnia").empty();
+
+            $("#combobox_tablas").prop("disabled", true);
+            $("#combobox_tablas_mercadotecnia").prop("disabled", true);
+
+            $("#q").prop("disabled", true);
+            $("#q_mercadotecnia").prop("disabled", true);
+          })
+      }
+
+      APP.LOAD.INIT_DATA = APP.LOAD.INIT_DATA || function () {
+        const electron = require('electron')
+
+        const usuario = "<%= usuario %>"
+        const password = "<%= password %>"
+        const mac_address = "<%= macAddress %>"
+
+        $("#txt_usuario").html(usuario)
+        $("#mac_address").html(mac_address)
+
+        STORE.USUARIO = usuario
+        STORE.MACADDRESS = mac_address
+
+        APP.LOAD.TABLES_COMBOBOX()
+      };
+
+      APP.LOAD.INIT_UI = APP.LOAD.INIT_UI || function () {
+        $("#q_mercadotecnia").on('click', function (event) {
+          event.preventDefault()
+          let tableName = $('#combobox_tablas_mercadotecnia').val();
+          $("#databaseName_mercadotecnia").html(`${tableName}`);
+          LOAD.LOAD_TABLE_DETAIL_MERCADOTECNIA(tableName);
+        });
+
+        $("#q").on('click', function (event) {
+          event.preventDefault()
+          let tableName = $('#combobox_tablas').val();
+          $("#databaseName").html(`${tableName}`);
+          LOAD.LOAD_TABLE_DETAIL(tableName);
+        });
+
+        /*$("#q_mercadotecnia").on('click', function (event) {
+          event.preventDefault()
+          $("#atras_mercadotecnia").prop("disabled", false);
+          let tableName = $('#combobox_tablas_mercadotecnia').val();
+
+          let columnName = "";
+          let columnNameIsDisabled = $('#combobox_columnas_mercadotecnia').prop('disabled');
+          if (!columnNameIsDisabled) {
+            columnName = $('#combobox_columnas_mercadotecnia').val();
+          }
+
+          $("#combobox_columnas_mercadotecnia").prop("disabled", false);
+          LOAD.LOAD_TABLE_DETAIL_MERCADOTECNIA(tableName, columnName);
+
+          let index = STORE.PREVIOUS_QUERY_ARRAY.length;
+          $("#breadcrum_mercadotecnia").append(`
+            <li class="breadcrumb-item" class="miga_de_pan" data-previous="${index}">
+              <i class="fas fa-database"></i> &nbsp; ${tableName}
+            </li>
+          `);
+        });
+
+        $("#l_mercadotecnia").on('click', function (event) {
+          event.preventDefault()
+          $("#atras_mercadotecnia").prop("disabled", true);
+          $("#breadcrum_mercadotecnia").html("");
+          $("#combobox_columnas_mercadotecnia").prop("disabled", true);
+
+          STORE.PREVIOUS_QUERY = '';
+
+          $.fn.dataTable.ext.errMode = 'none';
+          if ($.fn.DataTable.isDataTable('#datatable_mercadotecnia')) {
+            $('#datatable_mercadotecnia').DataTable().clear().destroy();
+            $("#datatable_mercadotecnia tbody").empty();
+            $("#datatable_mercadotecnia thead").empty();
+          }
+        });*/
+
+        $("#btn_logout").on("click", function () {
+          const electron = require('electron')
+          const { ipcRenderer } = require('electron')
+
+          ipcRenderer.send('show-login')
+          window.close();
+        });
+
+        $("#reload_page").on("click", function () {
+          location.reload();
+        });
+      };
+
+      APP.LOAD.GENERER_EXCEL = APP.LOAD.GENERER_EXCEL || function (dataArray) {
+        console.log(dataArray)
+        $.ajax({
+          cache: false,
+          url: 'http://157.245.245.81:3000/api/remote/persmisosDeImpresion/',
+          type: 'POST',
+          data: {
+            usuario: STORE.USUARIO,
+            tabla: $('#combobox_tablas_mercadotecnia').val(),
+            macAddress: STORE.MACADDRESS
+          },
+          success: function (data) {
+
+            console.log(data);
+            let columnas = data[0].columnas
+            let limite_consultas = data[0].limite_consultas
+            let no_consultas = data[0].no_consultas
+
+            if (limite_consultas < no_consultas) {
+              Toast.fire({
+                icon: 'error',
+                title: 'Limite de impresiones excedido'
+              });
+              return;
+            }
+
+            let columnasArray = columnas.split(',');
+
+            var reportHeader;
+            var tbody = [];
+            let titulos = [];
+            var row = [];
+
+            for (let i = 0; i < dataArray.length; i++) {
+              let fila = dataArray[i];
+              console.log(fila)
+
+              titulos = Object.keys(fila); // todos los titulos
+
+              for (let j = 0; j < titulos.length; j++) {
+                const tituloColumna = titulos[j];
+                if (!columnasArray.includes(tituloColumna)) {
+                  delete fila[tituloColumna]
+                }
+              }
+
+              titulos = Object.keys(fila); // titulos ya purgados 
+
+              row = Object.values(fila);
+              tbody.push([row.join(',')]);
+              row = [];
+            }
+
+            console.log(tbody)
+
+            // Armar el array de encabezado
+            reportHeader =
+              [
+                [titulos = titulos.join(',')]
+              ];
+
+            XLSX = require('xlsx')
+
+            var wb = XLSX.utils.book_new();
+            var ws = XLSX.utils.aoa_to_sheet([[]]);
+            XLSX.utils.book_append_sheet(wb, ws, "Inveni Excel Export");
+            XLSX.utils.sheet_add_aoa(ws, reportHeader, { origin: "A1" });
+            XLSX.utils.sheet_add_aoa(ws, tbody, { origin: "A2" });
+
+            // Dar formato al Worksheet
+            if (!ws["!gridlines"]) ws["!gridlines"] = [];
+            ws["!gridlines"] = false;
+
+            const { ipcRenderer } = require('electron')
+            ipcRenderer.send('saveExcelFile', wb)
+          },
+          error: function (xhr) {
+            Toast.fire({
+              icon: 'error',
+              title: 'No se pudo cargar la información'
+            });
+          },
+        });
+
+      }; // function GENERER_EXCEL end
+
+      APP.LOAD.INIT_DATA();
+      APP.LOAD.INIT_UI();
+    })(window);
+  </script>
+</body>
+
+</html>
