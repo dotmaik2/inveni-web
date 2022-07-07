@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%include ../partials/head %>
+    <title>WebApp Name | Perfil</title>
+    <style>
+      p {
+        margin-bottom: 0rem !important;
+      }
+
+      hr {
+        margin-top: 0.5rem !important;
+        margin-bottom: 0.5rem !important;
+
+      }
+    </style>
+</head>
+
+<body class="hold-transition sidebar-mini layout-fixed">
+  <!-- Site wrapper -->
+  <div class="wrapper">
+
+    <!-- Preloader -->
+    <div class="preloader flex-column justify-content-center align-items-center">
+      <img class="animation__shake" src="./dist/img/logo-grande.png" alt="WebApp Name Logo" height="120" width="auto">
+    </div>
+
+    <%include ../partials/navbar %>
+
+      <%include ../partials/sidebar %>
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+          <!-- Content Header (Page header) -->
+          <section class="content-header">
+            <div class="container-fluid">
+              <div class="row mb-2">
+                <div class="col-sm-6">
+                  <!-- <h1>Inicio</h1> -->
+                </div>
+              </div>
+            </div><!-- /.container-fluid -->
+          </section>
+
+          <!-- Main content -->
+          <section class="content">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-md-3">
+
+                  <!-- Profile Image -->
+                  <div class="card card-primary card-outline">
+                    <div class="card-body box-profile">
+                      <div class="text-center">
+                        <!-- <img class="profile-user-img img-fluid img-circle"
+                       src="../../dist/img/user4-128x128.jpg"
+                       alt="User profile picture"> -->
+                        <i class="nav-icon fas fa-user"></i>
+                      </div>
+
+
+                      <h3 class="profile-username text-center" id="cliente_nombre"></h3>
+
+                      <p class="text-muted text-center cliente_detalles_1" id="cliente_usuario"></p>
+                      <p class="text-muted text-center cliente_detalles_1">
+                        <span id="cliente_mac_address"></span>
+                        <!-- <button type="button" id="btn_clean_mac" class="btn btn-block btn-outline-secondary btn-xs">Limpiar MacAddress</button> -->
+                      </p>
+                    </div>
+                    <!-- /.card-body -->
+                  </div>
+                  <!-- /.card -->
+
+                  <!-- About Me Box -->
+                  <div class="card card-primary">
+                    <div class="card-header">
+                      <h3 class="card-title">Detalles</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                      <strong><i class="fas fa-map-marker-alt mr-1"></i> Dirección</strong>
+                      <p class="text-muted" id="cliente_direccion"></p>
+                      <hr>
+                      <strong><i class="fas fa-phone mr-1"></i> Telefono</strong>
+                      <p class="text-muted" id="cliente_telefono"></p>
+                      <hr>
+                      <strong><i class="fas fa-envelope mr-1"></i> Email</strong>
+                      <p class="text-muted" id="cliente_email"></p>
+                      <hr>
+                      <strong><i class="fa fa-calendar" aria-hidden="true"></i> Ultima fecha </br> permitida para
+                        consultas</strong>
+                      <p class="text-muted" id="cliente_fecha_limite"></p>
+                      <hr>
+                      <strong><i class="far fa-file-alt mr-1"></i> Notas</strong>
+                      <p class="text-muted" id="cliente_notas"></p>
+                      <hr>
+                      <button id="btn_edit_detalles" type="button" class="btn btn-block btn-outline-dark btn-sm">Editar
+                        Detalles</button>
+                    </div>
+                    <!-- /.card-body -->
+                  </div>
+                  <!-- /.card -->
+                </div>
+                <!-- /.col -->
+                <div class="col-md-9">
+                  <div class="card">
+
+
+                    <div class="card-header p-2">
+                      <ul class="nav nav-pills">
+                        <li class="nav-item"><a class="nav-link active" href="#permisos" data-toggle="tab">Permisos</a>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="#statistics" data-toggle="tab">Estadisticas</a>
+                        </li>
+                        <!-- <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Linea de tiempo</a></li> -->
+                      </ul>
+                    </div><!-- /.card-header -->
+                    <div class="card-body">
+                      <div class="tab-content">
+                        <div class="active tab-pane" id="permisos">
+                          <!-- Post -->
+
+                          <table class="table align-middle" id="permisos_table" role="grid">
+                            <thead>
+                              <tr class="">
+                                <th>id</th>
+                                <th>Base de datos</th>
+                                <th>Permitido</th>
+                                <th># Consultas</th>
+                                <th>Límite consultas</th>
+                                <th>Opciones</th>
+                              </tr>
+                            </thead>
+                            <tbody id="permisos_table_data">
+                            </tbody>
+                          </table>
+
+                          <!-- /.post -->
+                        </div>
+                        <!-- /.tab-pane -->
+                        <div class="tab-pane" id="statistics">
+
+                          <!-- Graficas de accesos etc -->
+
+                        </div>
+                        <!-- /.tab-pane -->
+                      </div>
+                      <!-- /.tab-content -->
+                    </div><!-- /.card-body -->
+
+
+                  </div>
+                  <!-- /.card -->
+                </div>
+                <!-- /.col -->
+              </div>
+              <!-- /.row -->
+            </div><!-- /.container-fluid -->
+          </section>
+          <!-- /.content -->
+          <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+
+        <%include ../partials/footer %>
+
+          <!-- Control Sidebar -->
+          <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+          </aside>
+          <!-- /.control-sidebar -->
+  </div>
+
+  <!-- Edit Imprimir Modal -->
+  <div class="modal fade" id="edit_imprimir_accesos_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title"> Impresiones </h4>
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i
+              class="fas fa-window-close"></i></button>
+        </div>
+        <form role="form" id="edit_imprimir_accesos_form">
+          <div class="modal-body">
+            <div class="form-group">
+              <input type="hidden" id="edit_impimir_id" class="form-control"></input>
+              <input type="hidden" id="edit_imprimir_table" class="form-control"></input>
+              <div class="form-group row">
+                <label for="edit_imprimir_columnas" class="col-sm-6 col-form-label">Columnas:</label>
+                <div class="col-sm-6">
+                  <select class="select2" id="edit_imprimir_columnas" multiple="multiple"
+                    data-placeholder="Selecciona las columnas que estan permitidas para imprimir" style="width: 100%;">
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="edit_imprimir_no_consultas" class="col-sm-6 col-form-label">Numero de impresiones
+                  realizadas:</label>
+                <div class="col-sm-6">
+                  <input id="edit_imprimir_no_consultas" type="number" class="form-control" placeholder="Numero de impresiones
+                  realizadas">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="edit_imprimir_limite" class="col-sm-6 col-form-label">Numero de Impresiones
+                  permitidas:</label>
+                <div class="col-sm-6">
+                  <input id="edit_imprimir_limite" type="number" class="form-control" placeholder="Numero de Impresiones
+                  permitidas">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-sm btn-outline-secondary" data-dismiss="modal">Cerrar</button>
+            <button type="submit" id="edit_imprimir_guardar_cambios" class="btn btn-sm btn-outline-success">Guardar
+              cambios</button>
+          </div>
+        </form>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+
+  <!-- Edit Usuarios Modal -->
+  <div class="modal fade" id="edit_limite_accesos_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="edit_title"></h4>
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i
+              class="fas fa-window-close"></i></button>
+        </div>
+        <form role="form" id="edit_limite_accesos_form">
+          <div class="modal-body">
+            <div class="form-group">
+              <input type="hidden" id="edit_id" class="form-control"></input>
+              <input type="hidden" id="edit_table" class="form-control"></input>
+              <input type="hidden" id="edit_tipo" class="form-control"></input>
+              <div class="form-group row">
+                <label for="edit_valor" class="col-sm-6 col-form-label">Valor:</label>
+                <div class="col-sm-6">
+                  <input id="edit_valor" type="number" step="1" min="0" class="form-control"
+                    onkeypress="return event.charCode >= 48 && event.charCode <= 57" required>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-sm btn-outline-secondary" data-dismiss="modal">Cerrar</button>
+            <button type="submit" id="edit_guardar_cambios" class="btn btn-sm btn-outline-success">Guardar
+              cambios</button>
+          </div>
+        </form>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+
+  <!-- Edit Detalles Modal -->
+  <div class="modal fade" id="edit_detalles_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="edit_title"> Editar Detalles</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i
+              class="fas fa-window-close"></i></button>
+        </div>
+        <form role="form" id="editDetallesForm">
+          <input type="hidden" id="edit_cliente_id" class="form-control" value="0"></input>
+          <div class="modal-body">
+            <div class="form-group row">
+              <label for="edit_direccion" class="col-sm-6 col-form-label">Dirección:</label>
+              <div class="col-sm-6">
+                <input id="edit_direccion" type="text" class="form-control" placeholder="Dirección">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="edit_telefono" class="col-sm-6 col-form-label">Telefono:</label>
+              <div class="col-sm-6">
+                <input id="edit_telefono" type="text" class="form-control" placeholder="Telefono">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="edit_email" class="col-sm-6 col-form-label">Email:</label>
+              <div class="col-sm-6">
+                <input id="edit_email" type="text" class="form-control" placeholder="Email">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="edit_email" class="col-sm-6 col-form-label">Ultima fecha </br> permitida para
+                consultas:</label>
+              <div class="col-sm-6">
+                <input type="date" id="edit_fecha_limite" name="trip-start" value="2022-02-18" min="2018-01-01"
+                  max="2050-01-01">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="edit_notas" class="col-sm-6 col-form-label">Notas:</label>
+              <div class="col-sm-6">
+                <textarea id="edit_notas" type="text" class="form-control" placeholder="Notas" rows="4"></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            <button type="submit" id="edit_guardar_detalles" class="btn btn-success">Guardar</button>
+          </div>
+        </form>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+
+  <%include ../partials/js %>
+    <script type="text/javascript">
+      (function (APP) {
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 3500
+        });
+
+        APP.STORE = APP.STORE || {};
+        APP.LOAD = APP.LOAD || {};
+
+
+        APP.LOAD.DATA_CLIENTE = APP.LOAD.DATA_CLIENTE || function () {
+          $.ajax({
+            cache: false,
+            url: '/api/clients/getById/<%= idCliente %>',
+            type: 'GET',
+            success: function (data) {
+              var cliente = data.payload[0];
+              $("#cliente_nombre").text(cliente.nombre);
+              $("#cliente_usuario").text(cliente.usuario);
+              $("#cliente_direccion").text(cliente.direccion);
+              $("#cliente_telefono").text(cliente.telefono);
+              $("#cliente_email").text(cliente.email);
+              $("#cliente_fecha_limite").text(moment(cliente.fecha_limite).format("DD/MMM/YYYY"));
+              $("#cliente_notas").text(cliente.notas);
+              $("#cliente_mac_address").text(cliente.macaddress);
+            },
+            error: function (xhr) {
+              Toast.fire({
+                icon: 'warning',
+                title: 'No se pudo consultar la informacion, intenta nuevamente'
+              });
+            },
+          });
+        };
+
+        APP.LOAD.PERMISOS_CLIENTE = APP.LOAD.PERMISOS_CLIENTE || function () {
+          $.ajax({
+            cache: false,
+            url: '/api/tables/getPermisosByClientId/<%= idCliente %>',
+            type: 'GET',
+            success: function (data) {
+              if (data.message !== 'Tables found') {
+                console.log("No se encontraron tablas");
+              } else {
+                var tablas = data.payload.tablesDetail;
+                $('#permisos_table_data').html('');
+                var columnNames = ["id", "name", "allowed", "access_count", "access_limit", "opciones"];
+                for (var i = 0; i < tablas.length; i++) {
+                  var trElement = $('<tr></tr>');
+                  for (var j = 0; j < columnNames.length; j++) {
+                    var dataColumn;
+                    if (columnNames[j] === 'opciones') {
+                      dataColumn = $('<td></td>').text(tablas[i].result['id']);
+                    } else if (columnNames[j] === 'name') {
+                      dataColumn = $('<td></td>').text(tablas[i][columnNames[j]].slice(0, -8));
+                    } else {
+                      dataColumn = $('<td></td>').text(tablas[i].result[columnNames[j]]);
+                    }
+                    trElement.append(dataColumn);
+                    $('#permisos_table').append(trElement);
+                  }
+                }
+                $('#permisos_table').DataTable({
+                  columns: [
+                    { data: 'id' },
+                    { data: 'name' },
+                    {
+                      data: 'allowed',
+                      render: function (data, type, row, meta) {
+                        return `${row.allowed == 1 ? '<span class="badge bg-success"> Lectura </span>' : '<span class="badge bg-danger"> NA </span>'}`;
+                      }
+                    },
+                    { data: 'access_count' },
+                    { data: 'access_limit' },
+                    {
+                      data: null,
+                      render: function (data, type, row, meta) {
+                        return `
+                          <button type="button" class="btn btn-outline-success btn-sm" data-row-tipo="grant" data-row-id="${row.id}" data-row-table="${row.name}">Otorgar</button>
+                          <button type="button" class="btn btn-outline-danger btn-sm" data-row-tipo="revoke" data-row-id="${row.id}" data-row-table="${row.name}">Revocar</button>
+                          <button type="button" class="btn btn-outline-dark btn-sm" data-row-tipo="accesos" data-row-id="${row.id}" data-row-table="${row.name}" data-row-valor="${row.access_count}"># Consultas</button>
+                          <button type="button" class="btn btn-outline-dark btn-sm" data-row-tipo="limite" data-row-id="${row.id}" data-row-table="${row.name}" data-row-valor="${row.access_limit}">Límite</button>
+                          <button type="button" class="btn btn-outline-dark btn-sm" data-row-tipo="imprimir" data-row-id="${row.id}" data-row-table="${row.name}" >Impresiones</button>
+                        `;
+                      }
+                    },
+                  ],
+                  info: false,
+                  pageLength: 20,
+                  lengthMenu: [[5, 10, 20, -1], [5, 10, 20, 'Todos']],
+                  "language": {
+                    "lengthMenu": "registros por pagina: _MENU_ ",
+                    "zeroRecords": "No se encontro nada",
+                    "info": "Pagina _PAGE_ de _PAGES_",
+                    "infoEmpty": "Sin registros",
+                    "infoFiltered": "(filtered from _MAX_ total records)",
+                    "sSearch": "Buscar",
+                    "paginate": {
+                      "previous": "Atras",
+                      "next": "Siguiente"
+                    }
+                  }
+                });
+
+              } // .else
+            },
+            error: function (xhr) {
+              Toast.fire({
+                icon: 'warning',
+                title: 'No se pudo consultar la informacion, intenta nuevamente'
+              });
+            },
+          });
+        };
+
+        APP.LOAD.UI = APP.LOAD.UI || function () {
+          $("#li_clientes").addClass("active");
+
+          $("#edit_guardar_cambios").on('click', function (event) {
+            event.preventDefault();
+            $("#edit_limite_accesos_modal").modal({ show: true });
+
+            var tipo = $('#edit_tipo').val();
+            var id = $('#edit_id').val();
+            var table = $('#edit_table').val();
+            var valor = $('#edit_valor').val();
+
+            if (tipo === "limite") {
+              APP.LOAD.LIMITE(table, valor, id);
+            } else if (tipo === "accesos") {
+              APP.LOAD.ACCESOS(table, valor, id);
+            }
+          })
+
+          $('#permisos_table tbody').on('click', 'td button', function () {
+            var tipo = $(this).data("row-tipo"); // grant, revoke, limite, accesos
+            var id = $(this).data("row-id");
+            var table = $(this).data("row-table"); // viene incompleto el nombre de la tabla (_control) se acompleta en el back
+            if (tipo === "grant") {
+              APP.LOAD.GRANT(table, id);
+            } else if (tipo === "revoke") {
+              APP.LOAD.REVOKE(table, id);
+            } else if (tipo === "limite") {
+              $("#edit_limite_accesos_modal").modal({ show: true });
+              $('#edit_title').text("Editar limite");
+              $('#edit_tipo').val("limite");
+              $('#edit_id').val($(this).data("row-id"));
+              $('#edit_table').val($(this).data("row-table"));
+              $('#edit_valor').val($(this).data("row-valor"));
+            } else if (tipo === "accesos") {
+              $("#edit_limite_accesos_modal").modal({ show: true });
+              $('#edit_title').text("Editar numero accesos");
+              $('#edit_tipo').val("accesos");
+              $('#edit_id').val($(this).data("row-id"));
+              $('#edit_table').val($(this).data("row-table"));
+              $('#edit_valor').val($(this).data("row-valor"));
+            } else if (tipo === "imprimir") {
+              APP.LOAD.IMPRIMIR_MODAL_DATA(table, id)
+            }
+          });
+
+          $("#btn_edit_detalles").on("click", function () {
+            event.preventDefault();
+            $("#edit_detalles_modal").modal({ show: true });
+
+            var direccion = $("#cliente_direccion").text();
+            var telefono = $("#cliente_telefono").text();
+            var email = $("#cliente_email").text();
+            var fechaLimite = $("#cliente_fecha_limite").text();
+            var notas = $("#cliente_notas").text();
+
+            $("#edit_direccion").val(direccion);
+            $("#edit_telefono").val(telefono);
+            $("#edit_email").val(email);
+            $("#edit_fecha_limite").val(moment(fechaLimite).format("YYYY-MM-DD"));
+            $("#edit_notas").val(notas);
+          });
+
+          $("#edit_guardar_detalles").on('click', function (event) {
+            event.preventDefault();
+
+            var id = "<%= idCliente %>";
+            var direccion = $("#edit_direccion").val();
+            var telefono = $("#edit_telefono").val();
+            var email = $("#edit_email").val();
+            var fechaLimite = $("#edit_fecha_limite").val();
+            var notas = $("#edit_notas").val();
+
+            APP.LOAD.GUARDAR_DETALLES(id, direccion, telefono, email, fechaLimite, notas);
+          });
+
+          $("#btn_clean_mac").on('click', function (event) {
+            event.preventDefault();
+
+            APP.LOAD.GUARDAR_DETALLES(id, direccion, telefono, email, notas);
+          });
+
+        }
+
+        APP.LOAD.GRANT = APP.LOAD.GRANT || function (table, id) {
+          $.ajax({
+            cache: false,
+            url: '/api/tables/grant',
+            type: 'PUT',
+            data: { table: table, id: id },
+            success: function (data) {
+              Toast.fire({ icon: 'success', title: data.message });
+              $('#permisos_table').dataTable().fnDestroy();
+              APP.LOAD.PERMISOS_CLIENTE();
+            },
+            error: function (xhr) {
+              Toast.fire({ icon: 'warning', title: 'No se pudo guardar el cambio, intenta nuevamente' });
+            },
+          });
+        };
+
+        APP.LOAD.REVOKE = APP.LOAD.REVOKE || function (table, id) {
+          $.ajax({
+            cache: false,
+            url: '/api/tables/revoke',
+            type: 'PUT',
+            data: { table: table, id: id },
+            success: function (data) {
+              Toast.fire({ icon: 'success', title: data.message });
+              $('#permisos_table').dataTable().fnDestroy();
+              APP.LOAD.PERMISOS_CLIENTE();
+            },
+            error: function (xhr) {
+              Toast.fire({ icon: 'warning', title: 'No se pudo guardar el cambio, intenta nuevamente' });
+            },
+          });
+        };
+
+        APP.LOAD.LIMITE = APP.LOAD.LIMITE || function (table, valor, id) {
+          $.ajax({
+            cache: false,
+            url: '/api/tables/limite',
+            type: 'PUT',
+            data: { table: table, valor: valor, id: id },
+            success: function (data) {
+              Toast.fire({ icon: 'success', title: data.message });
+              $('#permisos_table').dataTable().fnDestroy();
+              APP.LOAD.PERMISOS_CLIENTE();
+              $('#edit_limite_accesos_modal').modal('hide');
+            },
+            error: function (xhr) {
+              Toast.fire({ icon: 'warning', title: 'No se pudo guardar el cambio, intenta nuevamente' });
+            },
+          });
+        };
+
+        APP.LOAD.ACCESOS = APP.LOAD.ACCESOS || function (table, valor, id) {
+          $.ajax({
+            cache: false,
+            url: '/api/tables/accesos',
+            type: 'PUT',
+            data: { table: table, valor: valor, id: id },
+            success: function (data) {
+              Toast.fire({ icon: 'success', title: data.message });
+              $('#permisos_table').dataTable().fnDestroy();
+              APP.LOAD.PERMISOS_CLIENTE();
+              $('#edit_limite_accesos_modal').modal('hide');
+            },
+            error: function (xhr) {
+              Toast.fire({ icon: 'warning', title: 'No se pudo guardar el cambio, intenta nuevamente' });
+            },
+          });
+        };
+
+        APP.LOAD.GUARDAR_DETALLES = APP.LOAD.GUARDAR_DETALLES || function (id, direccion, telefono, email, fechaLimite, notas) {
+          $.ajax({
+            cache: false,
+            url: '/api/clients/detalles',
+            type: 'PUT',
+            data: {
+              id: id, direccion: direccion, telefono: telefono, email: email, fechaLimite: fechaLimite, notas: notas
+            },
+            success: function (data) {
+              Toast.fire({ icon: 'success', title: data.message });
+              APP.LOAD.DATA_CLIENTE();
+              $('#edit_detalles_modal').modal('hide');
+            },
+            error: function (xhr) {
+              Toast.fire({ icon: 'warning', title: 'No se pudo guardar el cambio, intenta nuevamente' });
+            },
+          });
+        };
+
+        APP.LOAD.IMPRIMIR_MODAL_DATA = APP.LOAD.IMPRIMIR_MODAL_DATA || function (table, id) {
+          $.ajax({
+            cache: false,
+            url: '/api/tables/getImprimir',
+            type: 'POST',
+            data: {
+              table: table,
+              id: id
+            },
+            success: function (data) {
+              console.log(data)
+              $("#edit_imprimir_accesos_modal").modal({ show: true });
+              $("#edit_impimir_id").val(id);
+              $("#edit_imprimir_table").val(table);
+              $("#edit_imprimir_limite").val(data[0].limite_consultas);
+              $("#edit_imprimir_no_consultas").val(data[0].no_consultas);
+
+              $("#edit_imprimir_columnas").empty();
+
+              var columnasArray = [];
+              var columnas = 'NOMBRE,DOMICILIO,COLONIA,CP,TELEFONO,COMPANIA,RFC,CURP,FECHA_NACIMIENTO,PLACA,NUM_SERIE,MODELO,MARCA,LINEA,SALARIO,EMPRESA,ANO,GIRO,NUM_PATRON,NUM_AFILIACION,CONYUGUE,ESTADO,MUNICIPIO'
+                .split(',');
+              for (var i = 0; i < columnas.length; i++) {
+                columnasArray.push({ id: columnas[i], text: columnas[i] })
+              }
+
+              $("#edit_imprimir_columnas").select2({ data: columnasArray })
+
+              if (data[0].columnas != null && data[0].columnas != undefined && data[0].columnas.length > 0) {
+                var columnasEnDb = data[0].columnas.split(',');
+                console.log(columnasEnDb)
+                $('#edit_imprimir_columnas').val(columnasEnDb);
+                $('#edit_imprimir_columnas').trigger('change'); // Notify any JS components that the value changed
+              } else {
+                console.log("sin columnas seleccionadas en la DB")
+              }
+
+            },
+            error: function (xhr) {
+              Toast.fire({ icon: 'warning', title: 'No se pudo guardar el cambio, intenta nuevamente' });
+            },
+          });
+        };
+
+        APP.LOAD.GUARDAR_DETALLES_DE_IMPRESION = APP.LOAD.GUARDAR_DETALLES_DE_IMPRESION || function () {
+          $("#edit_imprimir_guardar_cambios").on('click', function (event) {
+            event.preventDefault();
+
+            var select2Data = $('#edit_imprimir_columnas').select2('data');
+            var columnas = []
+            if (select2Data != null && select2Data != undefined && select2Data.length > 0) {
+              for (let i = 0; i < select2Data.length; i++) {
+                const columna = select2Data[i];
+                columnas.push(columna.id)
+              }
+            }
+
+            console.log(columnas.join(','));
+
+            $.ajax({
+              cache: false,
+              url: '/api/tables/guardarImprimir',
+              type: 'PUT',
+              data: {
+                id: $("#edit_impimir_id").val(),
+                tabla: $("#edit_imprimir_table").val(),
+                columnas: columnas.join(','),
+                noImpresiones: $("#edit_imprimir_no_consultas").val(),
+                limiteImpresiones:  $("#edit_imprimir_limite").val()
+              },
+              success: function (data) {
+                Toast.fire({ icon: 'success', title: data.message });
+                APP.LOAD.DATA_CLIENTE();
+                $('#edit_imprimir_accesos_modal').modal('hide');
+              },
+              error: function (xhr) {
+                Toast.fire({ icon: 'warning', title: 'No se pudo guardar el cambio, intenta nuevamente' });
+              },
+            });
+          });
+        };
+
+        APP.LOAD.DATA_CLIENTE();
+        APP.LOAD.PERMISOS_CLIENTE();
+        APP.LOAD.UI();
+        APP.LOAD.GUARDAR_DETALLES_DE_IMPRESION();
+      })(window);
+    </script>
+</body>
+
+</html>

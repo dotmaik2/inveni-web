@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%include ../partials/head %>
+   <title>WebApp Name | Inicio</title>
+</head>
+
+<body class="hold-transition sidebar-mini layout-fixed">
+    <!-- Site wrapper -->
+    <div class="wrapper">
+
+    <!-- Preloader -->
+    <div class="preloader flex-column justify-content-center align-items-center">
+        <img class="animation__shake" src="./dist/img/logo-grande.png" alt="WebApp Name Logo" height="120" width="auto">
+    </div>
+
+    <%include ../partials/navbar %>
+
+    <%include ../partials/sidebar %>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <!-- <h1>Inicio</h1> -->
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+<!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+
+
+            <!-- Default box -->
+            <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">
+                    <i class="fas fa-users-cog"></i>
+                    Usuarios
+                  </h3>
+                  <div class="card-tools">
+                    <ul class="nav nav-pills ml-auto">
+                      <li class="nav-item">
+                        <button class="btn btn-sm btn-outline-primary" data-target="#addUsuariosModal" data-toggle="modal" data-whatever="clientes" type="button"><i aria-hidden="true" class="fa fa-plus"></i> Agregar un Usuario</button> 
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body p-10">
+                    <table id="usuarios_datatable" class="display" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Usuario</th>
+                                <th>Email</th>
+                                <th>Rol</th>
+                                <th>Opciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usuarios_datatable_data"></tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Id</th>
+                                <th>Usuario</th>
+                                <th>Email</th>
+                                <th>Rol</th>
+                                <th>Opciones</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+
+
+            </div>
+        </div>
+        </div>
+    </section>
+    <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <%include ../partials/footer %>
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+
+<!-- Add Usuarios -->
+<div class="modal fade" id="addUsuariosModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Agregar Usuario</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fas fa-window-close"></i></button>
+            </div>
+        <form role="form" id="addUsuariosForm">
+            <div class="modal-body">
+                <div class="form-group">
+                    <!-- TODO: agregar validacion y limpieza de caracteres para no guardar en la base de datos basura -->
+                    <div class="form-group row">
+                        <label for="add_username" class="col-sm-6 col-form-label" >Usuario:</label>
+                        <div class="col-sm-6">
+                            <input id="add_username" type="text" class="form-control" placeholder="Usuario" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="add_password" class="col-sm-6 col-form-label" >Password:</label>
+                        <div class="col-sm-6">
+                            <input id="add_password" type="password" class="form-control" placeholder="Password" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="add_email" class="col-sm-6 col-form-label" >Email:</label>
+                        <div class="col-sm-6">
+                            <input id="add_email" type="email" class="form-control" placeholder="Email" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="add_role" class="col-sm-6 col-form-label" >Rol:</label>
+                        <div class="col-sm-6">
+                            <select id="add_role" class="form-control">
+                                <option value="REGULAR" selected>Regular</option>
+                                <option value="ADMIN">Admin</option>
+                                <option value="SUPER USER">Superuser</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-outline-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="submit" class="btn btn-sm btn-outline-success">Guardar cambios</button>
+            </div>
+        </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- Edit Usuarios Modal -->
+<div class="modal fade" id="editUsuariosModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Editar Usuario</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fas fa-window-close"></i></button>
+            </div>
+        <form role="form" id="editUsuariosForm">
+            <div class="modal-body">
+                <div class="form-group">
+                    <input type="hidden" id="edit_id" class="form-control" rows="5" value="0"></input>
+                    <div class="form-group row">
+                        <label for="edit_username" class="col-sm-6 col-form-label" >Usuario:</label>
+                        <div class="col-sm-6">
+                            <input id="edit_username" type="text" class="form-control" placeholder="Usuario" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="edit_email" class="col-sm-6 col-form-label" >Email:</label>
+                        <div class="col-sm-6">
+                            <input id="edit_email" type="email" class="form-control" placeholder="Email" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="edit_role" class="col-sm-6 col-form-label" >Rol:</label>
+                        <div class="col-sm-6">
+                            <select id="edit_role" class="form-control">
+                                <option value="REGULAR">Regular</option>
+                                <option value="ADMIN">Admin</option>
+                                <option value="SUPER USER">Superuser</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-outline-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="submit" class="btn btn-sm btn-outline-success">Guardar cambios</button>
+            </div>
+        </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+    <%include ../partials/js %>
+    <script type="text/javascript">
+        (function(APP){
+
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3500
+            });
+
+            APP.STORE = APP.STORE || {};
+            APP.LOAD = APP.LOAD || {};
+
+            APP.LOAD.GRID_USUARIOS = APP.LOAD.GRID_USUARIOS || function (){
+                $.ajax({
+                    url: '/api/users/getAll',
+                    method: 'POST',
+                    error: function(err){
+                        Toast.fire({
+                            icon:'warning',
+                            title:'Error' + err
+                        });
+                    },
+                    success: function(data){
+                        var usuarios = data.payload;
+                        $('#usuarios_datatable_data').html('');
+                        var columnNames = [ "id", "username", "email", "role", "opciones"];
+                        for(var i = 0; i < usuarios.length; i++){
+                            var trElement = $('<tr></tr>');
+                            for(var j = 0; j < columnNames.length; j++){
+                                var dataColumn;
+                                if(columnNames[j] === 'opciones'){
+                                    dataColumn = $('<td></td>').text(usuarios[i]['id']);
+                                }else{
+                                    dataColumn = $('<td></td>').text(usuarios[i][columnNames[j]]);
+                                }
+                                trElement.append(dataColumn);
+                                $('#usuarios_datatable').append(trElement);
+                            }
+                        }
+
+                        $('#usuarios_datatable').DataTable({
+                            columns: [
+                                { data: 'id' },
+                                { data: 'username' },
+                                { data: 'email' },
+                                { data: 'rol' },
+                                { data: null,
+                                    render: function(data, type, row, meta) {
+                                        return `
+                                            <!-- <button type="button" class="ver btn btn-md btn-outline-success btn-sm" data-row-id="${row.id}">Actividad</button> -->
+                                            <button type="button" class="editar btn btn-md btn-outline-primary btn-sm" data-row-username="${row.username}" data-row-email="${row.email}" data-row-rol="${row.rol}" data-row-id="${row.id}">Editar</button>
+                                            <button type="button" class="eliminar btn btn-md btn-outline-danger btn-sm" data-row-username="${row.username}" data-row-id="${row.id}">Eliminar</button>
+                                        `;
+                                    } 
+                                },
+                            ],
+                            "language": {
+                                "lengthMenu": "registros por pagina: _MENU_ ",
+                                "zeroRecords": "No se encontro nada",
+                                "info": "Pagina _PAGE_ de _PAGES_",
+                                "infoEmpty": "Sin registros",
+                                "infoFiltered": "(filtered from _MAX_ total records)",
+                                "sSearch": "Buscar",
+                                "paginate": {
+                                    "previous": "Atras",
+                                    "next": "Siguiente"
+                                }
+                            },
+                            "initComplete": function(settings, json) {
+                                var onEditShow = function(e){
+                                    $("#editUsuariosModal").modal({show: true});
+                                    $('#edit_id').val($(this).data("row-id"));
+                                    $('#edit_username').val($(this).data("row-username"));
+                                    $('#edit_email').val($(this).data("row-email"));
+                                    $('#edit_role').val($(this).data("row-rol"));
+                                };
+                                var onDeleteShow = function(e){
+                                    var id_a_eliminar = $(this).data("row-id");
+                                    var nombre_a_eliminar = $(this).data("row-username");
+                                    var areaId = $("#combobox_areas").val();
+
+                                    if (nombre_a_eliminar === '<%= user.username %>') {
+                                        alert("No podemos borrar a tu usuario, intenta con un usuario diferente");
+                                        return;
+                                    }
+
+                                    var result = confirm("Quieres borrar: " + nombre_a_eliminar);
+                                    if (result) {
+                                        $.ajax({
+                                            type: "DELETE",
+                                            url: `/api/users/delete/${id_a_eliminar}`,
+                                            error: function (xhr, status, error) {
+                                                Toast.fire({
+                                                    icon:'warning',
+                                                    title:'Error' + error
+                                                });
+                                            },
+                                            success: function (text) {
+                                                Toast.fire({
+                                                    icon:'success',
+                                                    title:'Se eliminó el registro'
+                                                });
+                                                $('#usuarios_datatable').dataTable().fnDestroy();
+                                                APP.LOAD.GRID_USUARIOS();
+                                            }
+                                        });
+                                    }
+                                };
+                                var onVerShow = function(e){
+                                    alert("ver");
+                                };
+                                
+                                $("#usuarios_datatable").find(".editar").on("click", onEditShow);
+                                $("#usuarios_datatable").find(".eliminar").on("click", onDeleteShow);
+                                $("#usuarios_datatable").find(".ver").on("click", onVerShow);
+                            }
+                        });
+                    }
+                });
+            };
+
+            APP.LOAD.ADD_USUARIOS = APP.LOAD.ADD_USUARIOS || function (){
+                $("#addUsuariosForm").submit(function(event) {
+                    event.preventDefault(); // cancels the form submission
+                    $.ajax({
+                        cache: false,
+                        url: '/api/users/create',
+                        type: 'POST',
+                        data: {
+                            username: $("#add_username").val(),
+                            password: $("#add_password").val(),
+                            role: $("#add_role").val(),
+                            email: $("#add_email").val()
+                        },
+                        success: function (msj) {
+                            Toast.fire({
+                                icon:'success',
+                                title:'Se agrego el registro'
+                            });
+                        },
+                        error: function(xhr) {
+                            Toast.fire({
+                                icon:'warning',
+                                title:'No se pudo agregar a la base de datos, intenta nuevamente'
+                            });
+                        },
+                    });
+                    $('#addUsuariosModal').modal('hide');
+                });
+            };
+
+            APP.LOAD.EDIT_USUARIOS = APP.LOAD.EDIT_USUARIOS || function() {
+                $("#editUsuariosForm").submit(function(event) {
+                    event.preventDefault();
+                    $.ajax({
+                        cache: false,
+                        url: '/api/users/update',
+                        type: 'PUT',
+                        data: {
+                            id: $("#edit_id").val(),
+                            username: $("#edit_username").val(),
+                            role: $("#edit_role").val(),
+                            email: $("#edit_email").val()
+                        },
+                        success: function (msj) {
+                            Toast.fire({
+                                icon:'success',
+                                title:'Se guardo el registro'
+                            });
+                        },
+                        error: function(xhr) {
+                            Toast.fire({
+                                icon:'warning',
+                                title:'No se pudo agregar a la base de datos, intenta nuevamente'
+                            });
+                        },
+                    });
+                    $('#editUsuariosModal').modal('hide'); 
+                });
+            };
+
+            APP.LOAD.UI = APP.LOAD.UI || function() {
+                $("#li_usuarios").addClass("active");
+
+                
+                $('#addUsuariosModal').on('hide.bs.modal', function (e) {
+                    $('#usuarios_datatable').dataTable().fnDestroy();
+                    APP.LOAD.GRID_USUARIOS();
+                });
+                $('#editUsuariosModal').on('hide.bs.modal', function (e) {
+                    $('#usuarios_datatable').dataTable().fnDestroy();
+                    APP.LOAD.GRID_USUARIOS();
+                });
+            }
+             
+            APP.LOAD.GRID_USUARIOS();
+            APP.LOAD.ADD_USUARIOS();
+            APP.LOAD.EDIT_USUARIOS();
+            APP.LOAD.UI();
+        })(window);
+    </script>
+</body>
+</html>

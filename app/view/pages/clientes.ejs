@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%include ../partials/head %>
+   <title>WebApp Name | Inicio</title>
+</head>
+
+<body class="hold-transition sidebar-mini layout-fixed">
+    <!-- Site wrapper -->
+    <div class="wrapper">
+
+    <!-- Preloader -->
+    <div class="preloader flex-column justify-content-center align-items-center">
+        <img class="animation__shake" src="./dist/img/logo-grande.png" alt="WebApp Name Logo" height="120" width="auto">
+    </div>
+
+    <%include ../partials/navbar %>
+
+    <%include ../partials/sidebar %>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <!-- <h1>Inicio</h1> -->
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+<!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+
+
+            <!-- Default box -->
+            <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">
+                    <i class="fas fa-users"></i>
+                    Clientes
+                  </h3>
+                  <div class="card-tools">
+                    <ul class="nav nav-pills ml-auto">
+                      <li class="nav-item">
+                        <button class="btn btn-sm btn-outline-primary" data-target="#addClientesModal" data-toggle="modal" data-whatever="clientes" type="button"><i aria-hidden="true" class="fa fa-plus"></i> Agregar un Cliente</button> 
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body p-10">
+                    
+                    <table id="clientes_datatable" class="display" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Nombre</th>
+                                <th>Usuario</th>
+                                <th>Password</th>
+                                <th>Activo</th>
+                                <th>Opciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="clientes_datatable_data"></tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Id</th>
+                                <th>Nombre</th>
+                                <th>Usuario</th>
+                                <th>Password</th>
+                                <th>Activo</th>
+                                <th>Opciones</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+
+
+            </div>
+        </div>
+        </div>
+    </section>
+    <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <%include ../partials/footer %>
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+
+<!-- Add Clientes -->
+<div class="modal fade" id="addClientesModal" tabindex="-1" role="dialog" aria-labelledby="addClientesModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="addClientesModal">Agregar Cliente</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <form role="form" id="addClienteForm">
+            <div class="modal-body">
+                <div class="form-group row">
+                    <label for="add_nombre" class="col-sm-6 col-form-label" >Nombre:</label>
+                    <div class="col-sm-6">
+                        <input id="add_nombre" type="text" class="form-control" placeholder="Nombre" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="add_usuario" class="col-sm-6 col-form-label" >Usuario:</label>
+                    <div class="col-sm-6">
+                        <input id="add_usuario" type="text" class="form-control" placeholder="Usuario" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="add_password" class="col-sm-6 col-form-label" >Password:</label>
+                    <div class="col-sm-6">
+                        <input id="add_password" type="text" class="form-control" placeholder="Password" required>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                <button type="submit" class="btn btn-success">Guardar</button>
+            </div>
+        </form>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Clientes Modal -->
+<div class="modal fade" id="editClientesModal" tabindex="-1" role="dialog" aria-labelledby="editClientesModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="editClientesModal">Editar Cliente</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <form role="form" id="editClientesForm">
+            <input type="hidden" id="editClientesId" class="form-control" value="0"></input>
+            <div class="modal-body">
+                <input type="hidden" id="edit_id" class="form-control" rows="5" value="0"></input>
+                <div class="form-group row">
+                    <label for="edit_nombre" class="col-sm-6 col-form-label" >Nombre:</label>
+                    <div class="col-sm-6">
+                        <input id="edit_nombre" type="text" class="form-control" placeholder="Nombre" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="edit_usuario" class="col-sm-6 col-form-label" >Usuario:</label>
+                    <div class="col-sm-6">
+                        <input id="edit_usuario" type="text" class="form-control" placeholder="Usuario" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="edit_password" class="col-sm-6 col-form-label" >Password:</label>
+                    <div class="col-sm-6">
+                        <input id="edit_password" type="text" class="form-control" placeholder="Password" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-6 col-form-label"></label>
+                    <div class="col-sm-6">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="edit_activo">
+                            <label class="form-check-label" for="edit_activo">Activo</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                <button type="submit" class="btn btn-success">Guardar</button>
+            </div>
+        </form>
+        </div>
+    </div>
+</div>
+
+<%include ../partials/js %>
+<script type="text/javascript">
+    (function(APP){
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3500
+        });
+        
+        APP.STORE = APP.STORE || {};
+        APP.LOAD = APP.LOAD || {};
+
+        APP.LOAD.GRID_CLIENTES = APP.LOAD.GRID_CLIENTES || function(){
+            $.ajax({
+                url: '/api/clients/getAll/',
+                method: 'GET',
+                error: function(err){
+                    console.log(err);
+                    Toast.fire({
+                        icon:'warning',
+                        title:'Error ' + err.statusText
+                    });
+                },
+                success: function(data){
+                    var clientes = data.payload;
+                    $('#clientes_datatable_data').html('');
+                    var columnNames = [ "id", "nombre", "usuario", "password", "activo", "opciones"];
+                    for(var i = 0; i < clientes.length; i++){
+                        var trElement = $('<tr></tr>');
+                        for(var j = 0; j < columnNames.length; j++){
+                            var dataColumn;
+                            if(columnNames[j] === 'opciones'){
+                                dataColumn = $('<td></td>').text(clientes[i]['id']);
+                            }else{
+                                dataColumn = $('<td></td>').text(clientes[i][columnNames[j]]);
+                            }
+                            trElement.append(dataColumn);
+                            $('#clientes_datatable').append(trElement);
+                        }
+                    }
+
+                    $('#clientes_datatable').DataTable({
+                        columns: [
+                            { data: 'id' },
+                            { data: 'nombre' },
+                            { data: 'usuario' },
+                            { data: 'password' },
+                            { data: 'activo',
+                                render: function(data, type, row, meta) {
+                                    return `${ row.activo == 1 ? '<span class="badge bg-success"> Si </span>' :  '<span class="badge bg-danger"> No </span>' }`;
+                                }
+                            },
+                            { data: null,
+                                render: function(data, type, row, meta) {
+                                    return `
+                                        <a class="btn btn-md btn-outline-success btn-sm" href="/web/home/cliente-perfil?idCliente=${row.id}">Actividad</a>
+                                        <button type="button" class="editar btn btn-md btn-outline-primary btn-sm" data-row-nombre="${row.nombre}" data-row-usuario="${row.usuario}" data-row-password="${row.password}" data-row-activo="${row.activo}" data-row-id="${row.id}">Editar</button>
+                                        <button type="button" class="eliminar btn btn-md btn-outline-danger btn-sm" data-row-nombre="${row.nombre}" data-row-id="${row.id}">Eliminar</button>
+                                    `;
+                                } 
+                            },
+                        ],
+                        "language": {
+                            "lengthMenu": "registros por pagina: _MENU_ ",
+                            "zeroRecords": "No se encontro nada",
+                            "info": "Pagina _PAGE_ de _PAGES_",
+                            "infoEmpty": "Sin registros",
+                            "infoFiltered": "(filtered from _MAX_ total records)",
+                            "sSearch": "Buscar",
+                            "paginate": {
+                                "previous": "Atras",
+                                "next": "Siguiente"
+                            }
+                        },
+                        "initComplete": function(settings, json) {
+                            var onEditShow = function(e){
+                                $("#editClientesModal").modal({show: true});
+                                $('#edit_id').val($(this).data("row-id"));
+                                $('#edit_nombre').val($(this).data("row-nombre"));
+                                $('#edit_usuario').val($(this).data("row-usuario"));
+                                $('#edit_password').val($(this).data("row-password"));
+                                $('#edit_activo').prop('checked', ($(this).data("row-activo") == "1"));
+                            };
+                            var onDeleteShow = function(e){
+                                var id_a_eliminar = $(this).data("row-id");
+                                var nombre_a_eliminar = $(this).data("row-nombre");
+                                var areaId = $("#combobox_areas").val();
+
+                                var result = confirm("Quieres borrar: " + nombre_a_eliminar);
+                                if (result) {
+                                    $.ajax({
+                                        type: "DELETE",
+                                        url: `/api/clients/delete/${id_a_eliminar}`,
+                                        error: function (xhr, status, error) {
+                                            Toast.fire({
+                                                icon:'warning',
+                                                title:'Error' + error
+                                            });
+                                        },
+                                        success: function (text) {
+                                            Toast.fire({
+                                                icon:'success',
+                                                title:'Se eliminó el registro'
+                                            });
+                                            $('#clientes_datatable').dataTable().fnDestroy();
+                                            APP.LOAD.GRID_CLIENTES();
+                                        }
+                                    });
+                                }
+                            };
+                            
+                            $("#clientes_datatable").find(".editar").on("click", onEditShow);
+                            $("#clientes_datatable").find(".eliminar").on("click", onDeleteShow);
+                        }
+                    });
+                }
+            });
+        };
+
+        APP.LOAD.ADD_CLIENTES = APP.LOAD.ADD_CLIENTES || function(){
+            $("#addClienteForm").submit(function(event) {
+                event.preventDefault();
+                $.ajax({
+                    cache: false,
+                    url: '/api/clients/create',
+                    type: 'POST',
+                    data: {
+                        nombre: $("#add_nombre").val(),
+                        usuario: $("#add_usuario").val(),
+                        password: $("#add_password").val()
+                    },
+                    success: function (msj) {
+                        Toast.fire({
+                            icon:'success',
+                            title:'Se agrego el registro'
+                        });
+                    },
+                    error: function(xhr) {
+                        Toast.fire({
+                            icon:'warning',
+                            title:'No se pudo agregar a la base de datos, intenta nuevamente'
+                        });
+                    },
+                });
+                $('#addClientesModal').modal('hide');
+            });
+        };
+
+        APP.LOAD.EDIT_CLIENTES = APP.LOAD.EDIT_CLIENTES || function(){
+            $("#editClientesForm").submit(function(event) {
+                event.preventDefault();
+                $.ajax({
+                    cache: false,
+                    url: '/api/clients/update',
+                    type: 'PUT',
+                    data: {
+                        id: $("#edit_id").val(),
+                        nombre: $("#edit_nombre").val(),
+                        usuario: $("#edit_usuario").val(),
+                        password: $("#edit_password").val(),
+                        activo: $("#edit_activo").is(':checked') ? 1 : 0
+                    },
+                    success: function (msj) {
+                        Toast.fire({
+                            icon:'success',
+                            title:'Se guardo el registro'
+                        });
+                    },
+                    error: function(xhr) {
+                        Toast.fire({
+                            icon:'warning',
+                            title:'No se pudo agregar a la base de datos, intenta nuevamente'
+                        });
+                    },
+                });
+                $('#editClientesModal').modal('hide');
+            });
+        };
+
+        APP.LOAD.UI = APP.LOAD.UI || function() {
+            $("#li_clientes").addClass("active");
+
+            $('#addClientesModal').on('hide.bs.modal', function (e) {
+                $('#clientes_datatable').dataTable().fnDestroy();
+                APP.LOAD.GRID_CLIENTES();
+            });
+            $('#editClientesModal').on('hide.bs.modal', function (e) {
+                $('#clientes_datatable').dataTable().fnDestroy();
+                APP.LOAD.GRID_CLIENTES();
+            });
+        }
+            
+        APP.LOAD.GRID_CLIENTES();
+        APP.LOAD.ADD_CLIENTES();
+        APP.LOAD.EDIT_CLIENTES();
+        APP.LOAD.UI();
+    })(window);
+</script>
+</body>
+</html>

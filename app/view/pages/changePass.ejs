@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+   <%include ../partials/head %>
+   <title>Change Password</title>
+</head>
+
+<body>
+  <div class="logo">
+    <div style="padding:0px;float:left;width:20%;opacity:0.85;text-align:center;">
+        <img src="/assets/img/logo.png" width="100px" height="auto" alt="logo">
+    </div>
+    <!--<div style="padding:0px;float:right;width:20%;opacity:0.85;text-align:center;">
+        <img src="/assets/img/kinnil.png" width="350px" height="auto" alt="logo kinnil">
+    </div> -->
+</div>
+
+<!-- Navigation -->
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">Cambiar password</a>
+        </div>
+
+    </div>
+</nav>
+
+<div class="wrapper">
+
+  <!-- Page Content Holder -->
+  <div class="container">
+      <div class="row">
+        <div class="card-body">
+          <form>
+            <br>
+            <div class="row">
+              <div class="col-md-4">
+                <label>Usuario</label>
+                <div class="input-group mb-3">
+                  <input type="text" disabled class="form-control">
+                </div>
+              </div>
+              <div class="col-md-4">
+                <label>Email</label>
+                <div class="input-group mb-3">
+                  <input type="text" disabled class="form-control">
+                </div>
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <div class="col-md-4">
+                <label>Nuevo Password</label>
+                <div class="input-group mb-3">
+                  <input type="password" class="form-control"" required>
+                  <div class="input-group-append">
+                    <span class="input-group-text"><i class="fas fa-tags"></i></span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <label>Confirmar Password</label>
+                <div class="input-group mb-3">
+                  <input type="password" class="form-control" required>
+                </div>
+              </div>
+            </div> <!-- /.row -->
+            <br>
+            <div class="row">
+              <div class="col-md-4">
+                <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Guardar cambios</button>
+              </div>
+          </div>
+          </form>
+        </div> <!-- ./card-body -->
+      </div> <!-- /.card -->
+      </div>
+  </div>
+</div>
+
+    <%include ../partials/js %>
+    <script type="text/javascript">
+        function callEndpoint() {
+
+            //$.getJSON('/api/home/someEndPoint', function(data) {
+            //    console.log(data);
+            //});
+        }
+
+        function sideBarClickAware(){
+            $('#sidebarCollapse').on('click', function () {
+                $('#sidebar').toggleClass('active');
+            });
+        }
+        
+        window.addEventListener('load', function(){
+            callEndpoint();
+            sideBarClickAware();
+        });
+    </script>
+</body>
+</html>

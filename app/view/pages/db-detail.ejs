@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%include ../partials/head %>
+    <title>WebApp Name | Inicio</title>
+</head>
+
+<body class="hold-transition sidebar-mini sidebar-collapse  ">
+  <!-- Site wrapper -->
+  <div class="wrapper">
+
+    <!-- Preloader -->
+    <div class="preloader flex-column justify-content-center align-items-center">
+      <img class="animation__shake" src="./dist/img/logo-grande.png" alt="WebApp Name Logo" height="120" width="auto">
+    </div>
+
+    <%include ../partials/navbar %>
+
+      <%include ../partials/sidebar %>
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+          <!-- Content Header (Page header) -->
+          <section class="content-header">
+            <div class="container-fluid">
+              <div class="row mb-2">
+                <div class="col-sm-6">
+                  <!-- <h1>Inicio</h1> -->
+                </div>
+              </div>
+            </div><!-- /.container-fluid -->
+          </section>
+
+          <!-- Main content -->
+          <section class="content">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-12">
+
+                  <div class="card">
+                    <div class="col-12">
+
+                      <div class="card-header border-0">
+                        <h3 class="card-title"><i class="fas fa-database"></i>
+                          <%= tableName %>
+                        </h3>
+                        <div class="card-tools">
+                          <!-- <button class="btn btn-sm btn-outline-dark" id="truncate" type="button"> Purgar</button> -->
+                        </div>
+                      </div>
+                      <div class="card-body table-responsive p-0">
+                        <table class="table table-striped table-valign-middle" id="tables_datatable">
+                          <thead id="tables_datatable_titles">
+                          </thead>
+
+                          <!--<tbody id="tables_datatable_data">
+                        </tbody>-->
+                          <tfoot></tfoot>
+                        </table>
+                      </div>
+
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </section>
+          <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+
+        <%include ../partials/footer %>
+
+          <!-- Control Sidebar -->
+          <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+          </aside>
+          <!-- /.control-sidebar -->
+  </div>
+
+  <%include ../partials/js %>
+    <script type="text/javascript">
+      (function (APP) {
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 3500
+        });
+
+        APP.LOAD = APP.LOAD || {};
+
+        APP.LOAD.LOAD_TABLE_DETAIL = APP.LOAD.LOAD_TABLE_DETAIL || function () {
+          $.ajax({
+            cache: false,
+            url: '/api/remote/getOneFromRemote/<%= tableName %>',
+            type: 'GET',
+            success: function (data) {
+              if (data.payload === "No se encontraron tablas en la base de datos") {
+                $('#tables_datatable').DataTable({
+                  searching: false, paging: false, info: false,
+                  "language": {
+                    "lengthMenu": "registros por pagina: _MENU_ ",
+                    "zeroRecords": "No se encontro nada",
+                    "info": "Pagina _PAGE_ de _PAGES_",
+                    "infoEmpty": "Sin registros",
+                    "infoFiltered": "(filtered from _MAX_ total records)",
+                    "sSearch": "Buscar",
+                    "paginate": {
+                      "previous": "Atras",
+                      "next": "Siguiente"
+                    }
+                  },
+                });
+                return;
+              }
+
+              var titles = data.payload.titles;
+              var columnNames = []
+
+              for (let i = 0; i < titles.length; i++) {
+                const element = titles[i].Field;
+                columnNames.push({ data: String(element), title: String(element) })
+              }
+
+              $.fn.dataTable.ext.errMode = 'none';
+              if ($.fn.DataTable.isDataTable('#tables_datatable')) {
+                $('#tables_datatable').DataTable().clear().destroy();
+                $("#tables_datatable tbody").empty();
+                $("#tables_datatable thead").empty();
+              }
+
+              var datatable = $('#tables_datatable')
+                .on('error.dt', function (e, settings, techNote, message) {
+                  Toast.fire({
+                    icon: 'error',
+                    title: settings.jqXHR.responseJSON.message
+                  });
+                })
+                .DataTable({
+                  columns: columnNames,
+                  processing: true,
+                  serverSide: true,
+                  ajax: {
+                    type: "POST",
+                    url: "/api/tables/getTableServerSideQuery",
+                    data: function (d) {
+                      d.table = '<%= tableName %>';
+                    }
+                  },
+                  drawCallback: function (settings) {
+                    // Here the response
+                    var response = settings.json;
+                    // console.log(response); // para ver la respuesta que le llega del ajax
+                  },
+                  initComplete: function () {
+                    this.api().columns().every(function () {
+                      var column = this;
+
+                      var timeout = null;
+                      // var select = $('<input type="text" oninput="this.size = this.value.length" oninput="LOAD.STOP_PROPAGATION(event)" onclick="LOAD.STOP_PROPAGATION(event);" class="individual_search" placeholder="Buscar" />')
+                      var select = $('<input type="text" oninput="LOAD.STOP_PROPAGATION(event)" onclick="LOAD.STOP_PROPAGATION(event);" class="individual_search" placeholder="Buscar" />')
+                        .appendTo($(column.header()))
+                        .on('keyup', function (evt) {
+
+                          $("#tables_datatable > tbody").show();
+                          //if(evt.type === 'keyup' && evt.keyCode !== 10 && evt.keyCode !== 13) return;
+                          // Clear the timeout if it has already been set.
+                          // This will prevent the previous task from executing
+                          // if it has been less than <MILLISECONDS>
+                          clearTimeout(timeout);
+
+                          // Make a new timeout set to go off in 1000ms (1 second)
+                          timeout = setTimeout(function () {
+                            console.log('stopped tiping');
+                            var val = $.fn.dataTable.util.escapeRegex(
+                              $(select).val()
+                            );
+
+                            column
+                              .search(val ? '%' + val + '%' : '%', true, false)
+                              .draw();
+                          }, 1000);
+                        });
+
+                      column.data().unique().sort().each(function (d, j) {
+                        select.append('<option value="' + d + '">' + d + '</option>')
+                      });
+                    });
+                    $("#tables_datatable_filter").hide();
+                  },
+                  pageLength: 5,
+                  lengthMenu: [[5, 10, 20], [5, 10, 20]],
+                  pagingType: "full_numbers",
+                  language: {
+                    "sProcessing": "Procesando...",
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sZeroRecords": "No se encontraron resultados",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                    "info": "Mostrando de _START_ a _END_ de _TOTAL_",
+                    "infoEmpty": "Sin registros",
+                    "infoFiltered": "(filtered from _MAX_ total records)",
+                    "sSearch": "Buscar",
+                    "sLoadingRecords": "Cargando...",
+                    "oPaginate": {
+                      "sFirst": "Primero",
+                      "sLast": "Último",
+                      "sNext": "Siguiente",
+                      "sPrevious": "Anterior"
+                    },
+                  }
+                });
+
+              $("#tables_datatable > tbody").hide();
+            },
+            error: function (xhr) {
+              Toast.fire({
+                icon: 'error',
+                title: 'No se pudo cargar la información'
+              });
+            },
+          });
+        };
+
+        APP.LOAD.STOP_PROPAGATION = APP.LOAD.STOP_PROPAGATION || function (evt) {
+          if (evt.stopPropagation !== undefined) {
+            evt.preventDefault();
+            evt.stopPropagation();
+          } else {
+            evt.cancelBubble = true;
+          }
+        };
+
+        APP.LOAD.UI = APP.LOAD.UI || function () {
+          $("#li_dbs").addClass("active");
+
+          $("#truncate").on('click', function () {
+            var nombre = "<%= tableName %>";
+            var result = confirm('Quieres purgar: ' + nombre + ' ?');
+            if (result) {
+              $.ajax({
+                type: "DELETE",
+                url: `/api/tables/truncate/${nombre}`,
+                error: function (xhr, status, error) {
+                  Toast.fire({
+                    icon: 'warning',
+                    title: 'Error' + error
+                  });
+                },
+                success: function (text) {
+                  Toast.fire({
+                    icon: 'success',
+                    title: 'Cambio guardado'
+                  });
+                  $('#tables_datatable').dataTable().fnDestroy();
+                  $('#tables_datatable_titles').empty();
+                  $('#tables_datatable_data').empty();
+                  APP.LOAD.LOAD_TABLE_DETAIL();
+                }
+              });
+            }
+          });
+        }
+
+        APP.LOAD.LOAD_TABLE_DETAIL();
+        APP.LOAD.UI();
+      })(window);
+    </script>
+</body>
+
+</html>

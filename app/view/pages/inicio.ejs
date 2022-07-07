@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%include ../partials/head %>
+   <title>WebApp Name | Inicio</title>
+</head>
+
+<body class="hold-transition sidebar-mini layout-fixed">
+    <!-- Site wrapper -->
+    <div class="wrapper">
+
+    <!-- Preloader -->
+    <div class="preloader flex-column justify-content-center align-items-center">
+      <img class="animation__shake" src="./dist/img/logo-grande.png" alt="WebApp Name Logo" height="120" width="auto">
+  </div>
+
+    <%include ../partials/navbar %>
+
+    <%include ../partials/sidebar %>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Bienvenido</h1>
+          </div>
+          <!--<div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item"><a href="#">Layout</a></li>
+              <li class="breadcrumb-item active">Collapsed Sidebar</li>
+            </ol>
+          </div>-->
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+<!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+
+
+            <!-- Default box -->
+            <div class="card">
+                
+                <!-- /.card-header -->
+                <div class="card-body p-10">
+
+                  <img src="./dist/img/background.jpg" alt="Inveni Logo" width="100%"></a>
+
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+
+
+            </div>
+        </div>
+        </div>
+    </section>
+    <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <%include ../partials/footer %>
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+
+<%include ../partials/js %>
+
+<script type="text/javascript">
+    (function(APP){
+        APP.STORE = APP.STORE || {};
+        APP.LOAD = APP.LOAD || {};
+        APP.LOAD.INICIO = APP.LOAD.INICIO || function(){
+
+        };
+            
+        APP.LOAD.INICIO();
+    })(window);
+</script>
+</body>
+</html>
