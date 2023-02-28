@@ -399,6 +399,7 @@ ROUTER.post('/uploadfile', upload.single('uploadfile'), (req, res) => {
   console.log('**********')
   const filePath = path.join(__dirname, '../../', 'assets/csv/', req.file.filename)
   const databaseName = req.body.databaseName
+  
   tablesService.UploadCsvDataToMySQL(filePath, databaseName)
     .then((result) => {
       console.log(result)

@@ -466,6 +466,7 @@ exports.createTablaCombinada = async (nombre, tablas, columnas, municipios, esta
 
 exports.UploadCsvDataToMySQL = async (filePath, databaseName) => {
   console.log(filePath, databaseName)
+  
   const result = await tablesModel.UploadCsvDataToMySQL(filePath, databaseName).catch((err) => { return err })
 
   fs.unlink(filePath, (err) => {
@@ -476,6 +477,7 @@ exports.UploadCsvDataToMySQL = async (filePath, databaseName) => {
       console.log('file deleted')
     }
   })
+
   return result
 }
 
